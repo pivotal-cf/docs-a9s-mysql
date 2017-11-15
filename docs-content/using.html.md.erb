@@ -16,14 +16,14 @@ to your app. For more information about managing service instances, see
 
 ###<a id='view-service'></a> View the a9s MySQL for PCF Service
 
-After the tile is installed, you can see the `a9s-mysql` and its service plans
+After the tile is installed, you can see the `a9s-mysql10` and its service plans
 appear in your PCF marketplace. Run `cf marketplace` to see the service listing:
 <pre class="terminal">
 $ cf marketplace
 Getting services from marketplace in org test / space test as admin...
 OK
 service      plans                                                                                   description
-a9s-mysql    mysql10-single-small, mysql10-single-big, mysql10-cluster-small, mysql10-cluster-big    This is the anynines MySQL 10 service.
+a9s-mysql10  mysql-single-small, mysql-single-big, mysql-cluster-small, mysql-cluster-big    This is the anynines MySQL 10 service.
 </pre>
 
 For more information about available service plans, see
@@ -34,7 +34,7 @@ For more information about available service plans, see
 To provision a MySQL database, run `cf create-service`. For example.
 
 <pre class="terminal">
-$ cf create-service a9s-mysql mysql10-single-small my-mysql-service-instance
+$ cf create-service a9s-mysql10 mysql-single-small my-mysql-service-instance
 </pre>
 
 Depending on your infrastructure and service broker utilization, it might take
@@ -79,13 +79,15 @@ System-Provided:
   "a9s-mysql": [
    {
     "credentials": {
-     "host": "EXAMPLE-HOST",
-     "password": "EXAMPLE-PWD",
-     "port": 6379
+      "name": "EXAMPLE-DATABASE-NAME"
+      "host": "EXAMPLE-HOST",
+      "port": 3306,
+      "username": "EXAMPLE-USERNAME"
+      "password": "EXAMPLE-PASSWORD",
     },
-    "label": "a9s-mysql",
+    "label": "a9s-mysql10",
     "name": "my-mysql-service-instance",
-    "plan": "mysql10-single-small",
+    "plan": "mysql-single-small",
    }
   ]
  }
@@ -115,7 +117,7 @@ Getting services in org test / space test as admin...
 OK
 
 name                          service       plan                   bound apps        last operation
-my-mysql-service-instance     a9s-mysql     mysql10-single-small   a9s-mysql-app     create succeeded
+my-mysql-service-instance     a9s-mysql10   mysql-single-small   a9s-mysql-app     create succeeded
 </pre>
 
 This example shows that `my-mysql-service-instance` is bound to the
@@ -156,10 +158,10 @@ $ cf update-service my-mysql-service-instance -p a-bigger-plan
 Here are the plans you can upgrade to depending on the one you are currently
 using:
 
-* If you are currently using the `mysql10-single-small` plan, you can upgrade to
-`mysql10-single-big` plan.
-* If you are currently using the `mysql10-replica-small` plan, you can upgrade
-to `mysql10-replica-big` plan.
+* If you are currently using the `mysql-single-small` plan, you can upgrade to
+`mysql-single-big` plan.
+* If you are currently using the `mysql-replica-small` plan, you can upgrade
+to `mysql-replica-big` plan.
 
 ##<a id='add-graphite-endpoint'></a>Add a Graphite Endpoint
 
