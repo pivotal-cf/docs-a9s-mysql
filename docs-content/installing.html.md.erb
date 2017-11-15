@@ -1,28 +1,209 @@
 ---
-title: Installing and Configuring YOUR-PRODUCT-NAME
+title: Installing and Configuring a9s MySQL for PCF
 owner: Partners
 ---
 
-This topic describes how to install and configure YOUR-PRODUCT-NAME.
+This topic describes how to install and configure a9s MySQL for PCF.
 
-##<a id='install'></a> Install and Configure YOUR-PRODUCT-NAME
 
-1. Download the product file from Pivotal Network.
+##<a id='prerequisites'></a> Prerequisites
 
-1. Navigate to the Ops Manager Installation Dashboard and click **Import a Product** to upload the product file. 
+Before installing a9s MySQL for PCF,
+ensure that you have installed and configured the products and tiles listed in [Requirements](./index.html#reqs).
 
-1. Under the **Import a Product** button, click **+** next to the version number of YOUR-PRODUCT-NAME. 
-This adds the tile to your staging area.
+This comprises the **a9s Consul DNS for PCF** tile and the **a9s BOSH for PCF** tile.
 
-1. Click the newly added **YOUR-PRODUCT-NAME** tile.
+The a9s Consul DNS for PCF tile is required because it is responsible
+for providing an internal DNS system to the other a9s service tiles, the a9s
+MySQL for PCF included.
+For more information about this tile,
+see [The Purpose of the a9s Consul DNS for PCF Tile](https://docs.pivotal.io/partners/a9s-consul-dns/usecase.html).
 
-1. **This portion of the procedure should tell the users how to configure the newly added tile by
-walking them through the sections. Which fields should they fill out? What are the different
-checkboxes? Include relevant screenshots here.** 
+The a9s BOSH for PCF tile is required because it is used by the a9s
+service tiles, for the provisioning and lifecycle management of their VM.
+For more information about this tile, see [a9s BOSH for PCF Use Case](https://docs.pivotal.io/partners/a9s-bosh/usecase.html).
 
-1. Click **Save**.
 
-1. Return to the Ops Manager Installation Dashboard and click **Apply changes** to install YOUR-PRODUCT-NAME tile.
+##<a id='install'></a> Install and Configure a9s MySQL for PCF
 
-**If needed, include additional configuration information below. For example, maybe there are
-configuration options not required for installation but which could be useful for certain users.**
+To install a9s MySQL for PCF, perform the following steps:
+
+1. Download the product file from [Pivotal Network](https://network.pivotal.io/products/a9s-mysql).
+
+2. Navigate to the Ops Manager Installation Dashboard and click **Import a Product**
+to upload the product file.
+
+3. Click **Add** or **+** (depending on the PCF version) next to the uploaded a9s MySQL for PCF tile in the Ops Manager
+**Available Products** view to add it to your staging area.
+
+4. Click the newly added tile, and then click **Settings** to review the configuration settings.
+  See the following sections for more information on how to configure the properties in each settings pane:
+  * [Assign AZs and Networks](#azs)
+  * [Configure the Backup Manager](#backup-manager)
+  * [Configure BOSH Errands](#errands)
+  * [Configure Resources](#resource-config)
+  * [Configure Stemcells](#stemcell)
+
+5. Click **Apply Changes** to deploy the service.
+
+After you installing the a9s MySQL for PCF, it is available in the list of marketplace services.
+For more information, see [Using a9s MySQL for PCF](./using.html).
+
+
+###<a id="azs"></a>Assign AZs and Networks
+
+Use **Assign AZs and Networks** to configure the location of service instance jobs.
+You should configure your network to balance cluster jobs across as many availability zones (AZs) as possible.
+
+<%= image_tag("az-and-networks.png") %>
+
+###<a id='errands'></a>Configure Errands
+
+Use **Errands** to configure the lifecycle errands that run when you install or uninstall a9s MySQL for PCF.
+The list below describes each errand.
+For more information, see [Understanding Lifecycle Errands](https://docs.pivotal.io/tiledev/tile-errands.html).
+
+<%= image_tag("a9s-mysql-for-pcf-errands.png") %>
+
+
+#### Post-Deploy Errands
+
+ * **Run BOSH Configurator**:
+  This errand configures a9s BOSH for PCF so that it can provision MySQL
+  service instances. When enabled, this errand uploads the required releases in
+  the a9s BOSH Director. Disabling this errand might speed up the deployment of
+  all tiles.
+
+  <p class="note"><strong>Note</strong>: To ensure your configuration remains up-to-date, disable this errand only when necessary.</p>
+
+ * **Run Template Uploader**:
+  This errand is required to configure generic components that are included in a9s MySQL for PCF with MySQL configurations.
+  Disabling this errand might speed up the deployment of all tiles.
+
+  <p class="note"><strong>Note</strong>: To ensure your configuration remains up-to-date, disable this errand only when necessary.</p>
+
+ * **Run Broker Registrar**:
+  This errand registers the a9s MySQL for PCF service broker
+  with Elastic Runtime. This makes the service available in the Elastic Runtime
+  marketplace.
+
+ * **Run Smoke Tests**:
+ This errand runs a series of basic tests against your a9s MySQL for PCF
+ installation to ensure that it is configured properly. The tests can
+ take over 30 minutes.
+
+#### Pre-Delete Errands
+
+ * **Delete all a9s MySQL instances**:
+  This errand deletes all a9s MySQL instances that were created with `cf create-service`.
+  <p class="note warning"><strong>WARNING</strong>: This task cannot be undone. All VMs of the service instances are permanently deleted.
+    If a service instance is bound to an app or has existing service keys, the errand fails.</p>
+
+ * **Run Broker Deregistrar**:
+  This errand unregisters the a9s MySQL for PCF service broker in Elastic Runtime. It also removes the a9s MySQL service from the Elastic Runtime marketplace.
+
+###<a id='resource-config'></a> Configure Resources
+
+You can configure the dimensions of the VMs that host the a9s MySQL for PCF components.
+This configuration does not cover the dedicated MySQL instances that run on VMs provided by the a9s BOSH tile for PCF.
+For more information, see [Configure Service Plan VMs](#configure-service-instance).
+
+<p class="note"><strong>Note</strong>: Anynines recommends using a VM Type of large or greater to support the tile compilation.</p>
+
+<%= image_tag("a9s-mysql-resource-config.png") %>
+
+
+###<a id="stemcell"></a>Configure Stemcells
+
+If you want to use a stemcell other than the default, click **Stemcell**, and then click **Import Stemcell** to upload the stemcell.
+
+<%= image_tag("stemcell-tab.png") %>
+
+##<a id="configure-service-instance"></a> Configure Service Plans
+
+The sizes and types of VMs used to provision service instances of a given service plan are specified in the **Cloud Config** pane of the a9s BOSH for PCF tile. See the <em>Cloud Config</em> section of the <a href="http://docs.pivotal.io/partners/a9s-bosh/installing.html">a9s BOSH for PCF installation documentation</a> that corresponds to your IaaS.</p>
+
+The table below lists available service plans:
+
+| This plan... | Uses these a9s BOSH for PCF settings to determine VM and disk size |
+|------|-------|
+|mysql-single-small| Cloud properties for the VM Type Small<br /> Cloud properties for the Disk Type Small|
+|mysql-single-big| Cloud properties for the VM Type Large<br /> Cloud properties for the Disk Type Big|
+|mysql-replica-small| Cloud properties for the VM Type Small<br /> Cloud properties for the Disk Type Small|
+|mysql-replica-big| Cloud properties for the VM Type Large<br /> Cloud properties for the Disk Type Big|
+
+
+##<a id='deployment_updater'></a>Update Existing Service Instances
+
+After updating the a9s MySQL for PCF tile, run the Deployment Updater errand to update all provisioned service instances to the new service and stemcell versions.<br />
+
+<p class="note"><strong>Note</strong>: anynines recommends running the <a href="./installing.html#errands" target="_blank">smoke tests</a> before running this errand.</p>
+
+<p class="note"><strong>Note</strong>: To run the errand, you must log in to the Ops Manager Director. For more information, see <a href="http://docs.pivotal.io/pivotalcf/1-9/customizing/trouble-advanced.html#prepare" target="_blank">Advanced Troubleshooting with the BOSH CLI</a>.</p>
+
+1. SSH into the Ops Manager VM:
+<pre class="terminal">
+$ ssh ubuntu@OPS-MANAGER-FQDN
+Password: ***********
+</pre>
+
+2. Target the BOSH Director:
+<pre class="terminal">
+$ bosh --ca-cert /var/tempest/workspaces/default/root\_ca\_certificate target OPS-MANAGER-DIRECTOR-IP
+Target set to DIRECTOR\_UUID
+</pre>
+
+3. Log in to the BOSH Director:
+<pre class="terminal">
+$ bosh login
+Your username: director
+Enter password: DIRECTOR\_CREDENTIAL
+Logged in as 'director'
+</pre>
+
+4. Run `bosh deployments` and record the name of the a9s MySQL for PCF deployment from the **Name** column:
+<pre class="terminal">
+$ bosh deployments
+Acting as user 'director' on 'p-bosh'
++------------------------------------------+-------------------------------+-------------
+| Name                                     | Release(s)                    | Stemcell(s)
++------------------------------------------+-------------------------------+-------------
+| a9s-bosh-a40c3b10d101faca4fbc            | bosh-aws-cpi/53               | bosh-vsphere
+| ...
++------------------------------------------+-------------------------------+-------------
+| a9s-consul-dns-3f3a49fb941f8c0874cb      | consul/9                      | bosh-vsphere
+| ...
++------------------------------------------+-------------------------------+-------------
+| a9s-mysql-service-94443f82b52dcf333bbd   | bosh-configurator-mysql/1     | bosh-vsphere
+| ...
++------------------------------------------+-------------------------------+-------------
+</pre>
+
+5. Switch the CLI to operate on the a9s MySQL for PCF deployment by running `bosh deployment /var/tempest/workspaces/default/deployments/DEPLOYMENT-NAME.yml` with the `a9s-mysql-service-...` name from the previous step:
+<pre class="terminal">
+$ bosh deployment /var/tempest/workspaces/default/deployments/a9s-mysql-service-94443f82b52dcf333bbd.yml
+% Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                               Dload  Upload   Total   Spent    Left  Speed
+100   352  100   352    0     0  12014      0 --:--:-- --:--:-- --:--:-- 12137
+Deployment set to '/var/tempest/workspaces/default/deployments/a9s-mysql-service-94443f82b52dcf333bbd.yml'</pre>
+
+6. (Optional) Run `bosh run errand mysql-smoke-­tests` to ensure that your a9s MySQL for PCF installation is configured properly.
+
+7. Run `bosh run errand deployment-updater` to force the update for all existing a9s MySQL for PCF instances:
+<pre class="terminal">
+$ bosh run errand deployment-updater
+% Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                               Dload  Upload   Total   Spent    Left  Speed
+100   352  100   352    0     0  26378      0 --:--:-- --:--:-- --:--:-- 27076
+Acting as user 'director' on deployment 'a9s-mysql-service-94443f82b52dcf333bbd' on 'p-bosh'
+&nbsp;
+Director task 6533
+Started preparing deployment > Preparing deployment. Done (00:00:01)
+&nbsp;
+...
+&nbsp;
+Errand 'deployment-updater' completed successfully (exit code 0)
+</pre>
+<p class="note"><strong>Note</strong>: Depending on the number of service instances,
+  the Deployment Updater may take significant time to finish running. BOSH shows no
+  logging output while the errand runs.</p>
