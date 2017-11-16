@@ -129,8 +129,8 @@ The table below lists available service plans:
 |------|-------|
 |mysql-single-small| Cloud properties for the VM Type Small<br /> Cloud properties for the Disk Type Small|
 |mysql-single-big| Cloud properties for the VM Type Large<br /> Cloud properties for the Disk Type Big|
-|mysql-replica-small| Cloud properties for the VM Type Small<br /> Cloud properties for the Disk Type Small|
-|mysql-replica-big| Cloud properties for the VM Type Large<br /> Cloud properties for the Disk Type Big|
+|mysql-cluster-small| Cloud properties for the VM Type Small<br /> Cloud properties for the Disk Type Small|
+|mysql-cluster-big| Cloud properties for the VM Type Large<br /> Cloud properties for the Disk Type Big|
 
 
 ##<a id='deployment_updater'></a>Update Existing Service Instances
@@ -174,18 +174,18 @@ Acting as user 'director' on 'p-bosh'
 | a9s-consul-dns-3f3a49fb941f8c0874cb      | consul/9                      | bosh-vsphere
 | ...
 +------------------------------------------+-------------------------------+-------------
-| a9s-mysql-service-94443f82b52dcf333bbd   | bosh-configurator-mysql/1     | bosh-vsphere
+| a9s-mysql101-service-94443f82b52dcf333bbd   | bosh-configurator-mysql/1     | bosh-vsphere
 | ...
 +------------------------------------------+-------------------------------+-------------
 </pre>
 
-5. Switch the CLI to operate on the a9s MySQL for PCF deployment by running `bosh deployment /var/tempest/workspaces/default/deployments/DEPLOYMENT-NAME.yml` with the `a9s-mysql-service-...` name from the previous step:
+5. Switch the CLI to operate on the a9s MySQL for PCF deployment by running `bosh deployment /var/tempest/workspaces/default/deployments/DEPLOYMENT-NAME.yml` with the `a9s-mysql101-service-...` name from the previous step:
 <pre class="terminal">
-$ bosh deployment /var/tempest/workspaces/default/deployments/a9s-mysql-service-94443f82b52dcf333bbd.yml
+$ bosh deployment /var/tempest/workspaces/default/deployments/a9s-mysql101-service-94443f82b52dcf333bbd.yml
 % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
                                Dload  Upload   Total   Spent    Left  Speed
 100   352  100   352    0     0  12014      0 --:--:-- --:--:-- --:--:-- 12137
-Deployment set to '/var/tempest/workspaces/default/deployments/a9s-mysql-service-94443f82b52dcf333bbd.yml'</pre>
+Deployment set to '/var/tempest/workspaces/default/deployments/a9s-mysql101-service-94443f82b52dcf333bbd.yml'</pre>
 
 6. (Optional) Run `bosh run errand mysql-smoke-­tests` to ensure that your a9s MySQL for PCF installation is configured properly.
 
@@ -195,7 +195,7 @@ $ bosh run errand deployment-updater
 % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
                                Dload  Upload   Total   Spent    Left  Speed
 100   352  100   352    0     0  26378      0 --:--:-- --:--:-- --:--:-- 27076
-Acting as user 'director' on deployment 'a9s-mysql-service-94443f82b52dcf333bbd' on 'p-bosh'
+Acting as user 'director' on deployment 'a9s-mysql101-service-94443f82b52dcf333bbd' on 'p-bosh'
 &nbsp;
 Director task 6533
 Started preparing deployment > Preparing deployment. Done (00:00:01)
