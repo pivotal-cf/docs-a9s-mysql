@@ -16,14 +16,15 @@ to your app. For more information about managing service instances, see
 
 ###<a id='view-service'></a> View the a9s MySQL for PCF Service
 
-After the tile is installed, you can see the `a9s-mysql10` and its service plans
-appear in your PCF marketplace. Run `cf marketplace` to see the service listing:
+After the tile is installed, you can see the service `a9s-mysql101` and its
+service plans appear in your PCF marketplace. Run `cf marketplace` to see the
+service listing:
 <pre class="terminal">
 $ cf marketplace
 Getting services from marketplace in org test / space test as admin...
 OK
-service      plans                                                                                   description
-a9s-mysql10  mysql-single-small, mysql-single-big, mysql-cluster-small, mysql-cluster-big    This is the anynines MySQL 10 service.
+service         plans                                                                           description
+a9s-mysql101    mysql-single-small, mysql-single-big, mysql-cluster-small, mysql-cluster-big    This is the anynines MySQL 10 service.
 </pre>
 
 For more information about available service plans, see
@@ -34,7 +35,7 @@ For more information about available service plans, see
 To provision a MySQL database, run `cf create-service`. For example.
 
 <pre class="terminal">
-$ cf create-service a9s-mysql10 mysql-single-small my-mysql-service-instance
+$ cf create-service a9s-mysql101 mysql-single-small my-mysql-service-instance
 </pre>
 
 Depending on your infrastructure and service broker utilization, it might take
@@ -76,7 +77,7 @@ OK
 System-Provided:
 {
  "VCAP_SERVICES": {
-  "a9s-mysql": [
+  "a9s-mysql101": [
    {
     "credentials": {
       "name": "EXAMPLE-DATABASE-NAME"
@@ -85,7 +86,7 @@ System-Provided:
       "username": "EXAMPLE-USERNAME"
       "password": "EXAMPLE-PASSWORD",
     },
-    "label": "a9s-mysql10",
+    "label": "a9s-mysql101",
     "name": "my-mysql-service-instance",
     "plan": "mysql-single-small",
    }
@@ -116,8 +117,8 @@ $ cf services
 Getting services in org test / space test as admin...
 OK
 
-name                          service       plan                   bound apps        last operation
-my-mysql-service-instance     a9s-mysql10   mysql-single-small   a9s-mysql-app     create succeeded
+name                          service          plan                 bound apps        last operation
+my-mysql-service-instance     a9s-mysql101     mysql-single-small   a9s-mysql-app     create succeeded
 </pre>
 
 This example shows that `my-mysql-service-instance` is bound to the
