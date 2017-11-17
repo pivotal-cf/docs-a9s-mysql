@@ -43,7 +43,7 @@ The current version of a9s MySQL for PCF includes the following key features:
 | **Logging and Monitoring** | Each MySQL service instance provides log messages and MySQL-specific metrics to one or more `syslog/graphite` endpoints. You can configure the `syslog/graphite` endpoint to receive logging and monitoring information. |
 | **Deployment Updater** | This errand automatically updates the stemcell and all provisioned a9s MySQL for PCF service instances to their lastest version. |
 | **Service Guard** | The Service Guard creates Cloud Foundry security groups for your service instance VMs.<br /><br /> When the IP address of a service instance changes, the guard updates the security group. The Service Guard also restarts the application instances bound to the affected service instance. **The instances of one app are restarted one by one to avoid downtime.**|
-| **High Availability** | a9s MySQL for PCF ensures high-availability.<br/><br/>The Consul-based internal DNS system provided by a9s Consul DNS for PCF ensures that the connected application always connects to a working node. |
+| **High Availability** | a9s MySQL for PCF ensures high availability.<br/><br/>The Consul-based internal DNS system provided by a9s Consul DNS for PCF ensures that the connected application always connects to a working node. |
 
 ## <a id="snapshot"></a>Product Snapshot
 
@@ -66,11 +66,11 @@ The following table provides version and version-support information about a9s M
     </tr>
     <tr>
         <td>Compatible Ops Manager version(s)</td>
-        <td>v1.8.x, v1.9.x, v1.10.x and v1.11.x</td>
+        <td>v1.8.x, v1.9.x, v1.10.x, and v1.11.x</td>
     </tr>
     <tr>
         <td>Compatible Elastic Runtime version(s)</td>
-        <td>v1.8.x, v1.9.x, v1.10.x and v1.11.x</td>
+        <td>v1.8.x, v1.9.x, v1.10.x, and v1.11.x</td>
     </tr>
     <tr>
         <td>IaaS support</td>
