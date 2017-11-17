@@ -2,14 +2,16 @@
 title: a9s MySQL for PCF
 owner: Partners
 ---
+<p class="note warning">
+<strong>IMPORTANT: </strong>
+The a9s MySQL for Pivotal Cloud Foundry (PCF) tile is currently in beta and is intended for evaluation and test purposes only. Do not use this product in a PCF production environment.
+</p>
 
-This documentation describes the a9s MySQL for Pivotal Cloud Foundry (PCF) tile. a9s MySQL for PCF
+This documentation describes the a9s MySQL for PCF tile. a9s MySQL for PCF
 enables on-demand provisioning of VM-based, dedicated MySQL servers. Developers can
 create instances of a MySQL server using Apps Manager or the Cloud Foundry Command Line
-interface (cf CLI) and bind these instances to an app.
+Interface (cf CLI) and bind these instances to an app.
 
-
-This documentation describes the a9s MySQL for PCF tile.
 
 <%= image_tag("a9s-mysql-tile.png") %>
 
@@ -36,7 +38,7 @@ The current version of a9s MySQL for PCF includes the following key features:
 |---------|---------|
 | **On­-Demand Service Instance Provisioning** | a9s MySQL for PCF deploys MySQL instances automatically. Developers can provision a single-VM MySQL server using a single command. |
 | **Service Instance Isolation** | Each MySQL server runs on a dedicated VM to ensure bad neighborhood protection in order to be aligned with enterprise security requirements.<br/><br/>a9s MySQL for PCF uses Cloud Foundry security groups to prevent network connections being established by unauthorized apps.
-| **Smoke Tests** | a9s MySQL for PCF contains a post-deploy smoke tests errand that runs a series of basic test against your installation to ensure that it is configured properly. |
+| **Smoke Tests** | a9s MySQL for PCF contains a post-deploy smoke tests errand that runs a series of basic tests against your installation to ensure that it is configured properly. |
 | **Service Instance Capacity Upgrade** | Cloud Foundry Service Plan updates allow upgrades to the RAM, CPU, and storage capacity for your MySQL instances. |
 | **Logging and Monitoring** | Each MySQL service instance provides log messages and MySQL-specific metrics to one or more `syslog/graphite` endpoints. You can configure the `syslog/graphite` endpoint to receive logging and monitoring information. |
 | **Deployment Updater** | This errand automatically updates the stemcell and all provisioned a9s MySQL for PCF service instances to their lastest version. |
