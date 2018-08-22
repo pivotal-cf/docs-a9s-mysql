@@ -2,24 +2,18 @@
 title: a9s MySQL for PCF
 owner: Partners
 ---
-<p class="note warning">
-<strong>IMPORTANT: </strong>
-The a9s MySQL for Pivotal Cloud Foundry (PCF) tile is currently in beta and is intended for evaluation and test purposes only. Do not use this product in a PCF production environment.
-</p>
 
-This documentation describes the a9s MySQL for PCF tile. a9s MySQL for PCF
-enables on-demand provisioning of VM-based, dedicated MySQL servers. Developers can
-create instances of a MySQL server using Apps Manager or the Cloud Foundry Command Line
-Interface (cf CLI) and bind these instances to an app.
+This documentation describes the a9s MySQL for Pivotal Cloud Foundry (PCF) tile. a9s MySQL for PCF
+enables on-demand provisioning of VM-based dedicated MySQL servers and clusters. Developers can create clustered and single node MySQL service instances, using Apps Manager or the Cloud Foundry Command Line Interface, and bind them to apps.
+A service instance may be associated with a single dedicated VM or a cluster spread across multiple VMs. You can choose, between single VM and clustered MySQL services instances, with service plans.
 
-
-<%= image_tag("a9s-mysql-tile.png") %>
+<%= image_tag("a9s-mysql.png") %>
 
 ## <a id='overview'></a>Overview
 
-When you run the cf CLI ```create-service a9s-mysql101``` command,
-PCF creates dedicated VMs for this service instance. This allows
-the best possible bad neighborhood protection.
+When you run the cf CLI ```create-service a9s-MySQL``` command,
+PCF creates dedicated VMs for this service instance. This provides
+protection from bad neighbors.
 
 MySQL service instance provisioning, including VM orchestration, is entirely automated.
 This enables service instances to be highly isolated and shielded by infrastructure virtualization
@@ -27,12 +21,16 @@ mechanisms.
 
 Due to the on-demand provisioning on VMs, only existing service
 instances allocate infrastructure resources. These resources are released when service
-instances are destroyed. Using on-demand provisioning the number of
+instances are destroyed. Using on-demand, provisioning the number of
 service instances is not limited by design.
 
-### <a></a>Current Features
+Distributed across multiple infrastructure availability zones,  clustered data
+service plans enable short failover times and are resilient against
+failures of individual infrastructure hosts or entire availability zones.
 
-The current version of a9s MySQL for PCF includes the following key features:
+### <a id="currentfeatures"></a>Current Features
+
+a9s MySQL for PCF includes the following key features:
 
 | Feature | Benefit |
 |---------|---------|
@@ -44,6 +42,18 @@ The current version of a9s MySQL for PCF includes the following key features:
 | **Deployment Updater** | This errand automatically updates the stemcell and all provisioned a9s MySQL for PCF service instances to their lastest version. |
 | **Service Guard** | The Service Guard creates Cloud Foundry security groups for your service instance VMs.<br /><br /> When the IP address of a service instance changes, the guard updates the security group. The Service Guard also restarts the application instances bound to the affected service instance. **The instances of one app are restarted one by one to avoid downtime.**|
 | **High Availability** | a9s MySQL for PCF ensures high availability.<br/><br/>The Consul-based internal DNS system provided by a9s Consul DNS for PCF ensures that the connected application always connects to a working node. |
+| **Service Dashboard** | The Service Dashboard provides single sign on and lets the user easily trigger backups. |
+| **Syslog Endpoints for Instances** | In the tile a default endpoint for syslog and graphite can be configured for each service instances which is greated by the end user. |
+
+### <a id='video'></a>Video Overview of a9s MySQL for PCF
+
+<!-- The following video provides an overview of how a9s MySQL for PCF works.
+
+<p>
+  <iframe src="https://www.youtube.com/embed/kNdWIS6kWqw"
+    width="656" height="372" frameborder="0" allowfullscreen></iframe>
+</p>
+-->
 
 ## <a id="snapshot"></a>Product Snapshot
 
@@ -54,51 +64,45 @@ The following table provides version and version-support information about a9s M
     <th>Details</th>
     <tr>
         <td>Version</td>
-        <td>v0.10.0</td>
+        <td>v2.0.1</td>
     </tr>
     <tr>
         <td>Release date</td>
-        <td>November 20, 2017</td>
-    </tr>
-    <tr>
-        <td>Software component version</td>
-        <td>v10.1.24</td>
+        <td>August 6, 2018</td>
     </tr>
     <tr>
         <td>Compatible Ops Manager version(s)</td>
-        <td>v1.8.x, v1.9.x, v1.10.x, and v1.11.x</td>
+        <td>v1.12.x, v2.0.x, v2.1.x and v2.2.x</td>
     </tr>
     <tr>
-        <td>Compatible Elastic Runtime version(s)</td>
-        <td>v1.8.x, v1.9.x, v1.10.x, and v1.11.x</td>
+        <td>Compatible Pivotal Application Service version(s):</td>
+        <td>v1.12.x, v2.0.x, v2.1.x and v2.2.x</td>
     </tr>
     <tr>
         <td>IaaS support</td>
-        <td>AWS, OpenStack, and vSphere</td>
-    </tr>
-    <tr>
-        <td>IPsec support</td>
-        <td>No</td>
+        <td>AWS, Azure, GCP, OpenStack, and Vsphere</td>
     </tr>
 </table>
+\* As of PCF v2.0, <em>Elastic Runtime</em> is renamed <em>Pivotal Application Service (PAS)</em>.
+
+* This is a major release. Upgrades from a9s MySQL for PCF v1.x are not supported. If you previously installed a9s MySQL for PCF v1.x, uninstall it and install the latest version
 
 ## <a id="reqs"></a>Requirements
 
 To install and use a9s MySQL for PCF, you must install the following products and tiles:
 
-* [a9s Consul DNS](https://network.pivotal.io/products/a9s-consul) for PCF, v1.0.0 or later
-* [a9s BOSH](https://network.pivotal.io/products/a9s-bosh) for PCF, v1.0.0 or later
+* Pivotal Application Service (formerly Elastic Runtime) v1.12 or later
 
 For more information, see [Installing and Configuring a9s MySQL for PCF](./installing.html).
 
 ## <a id="feedback"></a>Feedback and Support
 
-a9s MySQL for PCF is an automation toolset for open source MySQL. The anynines
-team can help your team  get started and be successful. Technical support,
-including a service level agreement, is available with a commercial license.
+a9s MySQL for PCF is an automation toolset for open source MySQL.
+The entire anynines team can help your team  get started and be successful.
+Technical support, including a service level agreement, is available with a commercial license.
 
-If your company has specific MySQL administration policies or configuration best
-practises, the anynines team is happy to incorporate them, if applicable.
+If your company has specific MySQL administration policies or configuration best practises,
+the anynines team is happy to incorporate them, if applicable.
 Third-party MySQL support organizations are also welcome to assist.
 
 Contributions are welcome and will be investigated by the anynines team.
@@ -106,5 +110,4 @@ Send any bugs, feature requests, or questions to <a href="mailto:dssupport@anyni
 
 ## <a id='license'></a>License
 
-Contact our <a href="mailto:dssupport@anynines.com">sales team</a> to learn more
-about commercial licenses and support.
+Contact our <a href="mailto:dssupport@anynines.com">sales team</a> to learn more about commercial licenses and support.
