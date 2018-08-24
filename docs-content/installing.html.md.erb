@@ -10,7 +10,7 @@ This topic describes how to install and configure a9s MySQL for Pivotal Cloud Fo
 
 To install a9s MySQL for PCF, perform the following steps:
 
-1. Download the product file from the [Pivotal Network](https://network.pivotal.io/products/a9s-mysql).
+1. Download the product file from [Pivotal Network](https://network.pivotal.io/products/a9s-mysql).
 
 2. Navigate to the Ops Manager Installation Dashboard and click **Import a Product** to upload the product file.
 
@@ -110,7 +110,7 @@ Use **Errands** to configure the lifecycle errands that run when you install or 
   <p class="note warning"><strong>WARNING</strong>: This is an absolutly destructive task and can't be undone. All VMs of the service instances will be deleted irrecoverably. In the case a service instance is bound to an app or service keys are existing, the errand will fail.</p>
 
  * **Run Broker Deregistrar**:
-  This will deregister the a9s MySQL for PCF service broker in Elastic Runtime. This errand removes the a9s MySQL service from the Marketplace.
+  This will unregisters the a9s MySQL for PCF service broker in Elastic Runtime. This errand removes the a9s MySQL service from the Marketplace.
 
 
 ###<a id='resource-config'></a> Configure Resources
