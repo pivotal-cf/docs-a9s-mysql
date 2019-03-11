@@ -15,6 +15,7 @@ immediate backups and restore backups.
 
 <span>1.</span> Navigate to the **Status** tab of the tile and record the IP address of one
   of the a9s Ancillary Service instances.
+
   <%= image_tag("status_tab.png", width: 300) %>
 
 <span>2.</span> On the **Credentials** tab, find the credentials of the service under **Backup Manager Password**.
@@ -90,7 +91,7 @@ the backup information of a9s-pg is not guaranteed:
 
 <p class="note"><strong>Note:</strong> Be aware that restoring the a9s-pg to a
 previous point in time means you possibly loose information about deployed
-instances which results in ghost instances that can't not any longer be handled
+instances which results in ghost instances that can no longer be handled
 by the a9s Service Broker and a9s Deployer.</p>
 
 ### <a id='a9s-pg-backup-trigger-a-backup'></a> Trigger a Backup
@@ -171,7 +172,7 @@ $curl admin:53cr3t&commat;172.28.7.64:3000/backup_agent/restores -d "backup_id=1
 ```
 
 During the restore of the a9s-pg the a9s Backup Manager is not available and
-can't be used to see the state of the restore process, see also
+cannot be used to see the state of the restore process, see also
 [Limitations](backup.html#limitations).
 You can watch the backup-agent logs of the a9s-pg master node to see the state.
 On the VM itself you can use the following command:
