@@ -342,7 +342,7 @@ System-Provided:
 Note the host `d566e59.service.dc1.a9svs`, the username `a9s-brk-usr`, and the
 password `a9s-password`. You need them in the next step.
 
-### <a id='create-a-tunnel-to-the-service'></a> Create a Tunnel to The Service
+### <a id='create-a-tunnel-to-the-service'></a> Create a Tunnel to the Service
 
 With `cf ssh`,  you can create am SSH forward tunnel to the management dashboard.
 Use port `3306` to connect to the a9s MySQL instance.
@@ -358,12 +358,12 @@ When the SSH tunnel is open, you can access the instance using the address `loca
 <code>exit</code>.</p>
 
 
-## <a id="service-keys"></a> Service keys
+## <a id="service-keys"></a> Service Keys
 
 To gain access to the service manually rather than binding apps to it, you can
 use service keys.
 
-### <a id="create-a-service-key"></a> Creating a Service Key
+### <a id="create-a-service-key"></a> Create a Service Key
 
 To create a key to the service instance `mysql1` call `nykey`, run the following command:
 
@@ -371,7 +371,7 @@ To create a key to the service instance `mysql1` call `nykey`, run the following
 cf create-service-key mysql1 mykey
 ```
 
-### <a id="listing-service-keys"></a> Listing Service Keys
+### <a id="listing-service-keys"></a> List Service Keys
 
 To list all the keys for the `mysql1` service instance, run the following command:
 
@@ -379,7 +379,7 @@ To list all the keys for the `mysql1` service instance, run the following comman
 cf service-keys mysql1
 ```
 
-### <a id="accessing-service-keys"></a> Accessing Service Keys
+### <a id="accessing-service-keys"></a> Access Service Keys
 
 To obtain the key `mykey` from the `mysql1` service instance, run the following command:
 
@@ -387,7 +387,7 @@ To obtain the key `mykey` from the `mysql1` service instance, run the following 
 cf service-key mysql1 mykey
 ```
 
-### <a id="deleting-service-keys"></a> Deleting Service Keys
+### <a id="deleting-service-keys"></a> Delete Service Keys
 
 To delete a service key `mykey` from the service instance `mysql1`, run the
 following command:
@@ -396,7 +396,7 @@ following command:
 cf delete-service-key mysql1 mykey
 ```
 
-## <a id='setup-disk-usage_alerts'></a> Setup Disk Usage Alerts
+## <a id='setup-disk-usage_alerts'></a> Set Up Disk Usage Alerts
 
 Each service instance node comes with the **a9s Parachute** component. This component
 monitors *ephemeral* and *persistent* disk usage. If one of these disk usages reaches
@@ -414,7 +414,7 @@ or
 Limit reached for: ephemeral disk
 ```
 
-### <a id='how-to-restart-stopped-instances'></a> How to restart stopped instances
+### <a id='how-to-restart-stopped-instances'></a> How to Restart Stopped Instances
 
 To restart a stopped instance, the user can use the `cf update-service` command to
 set the `max_disk_threshold` custom parameter. All values between 0 and 100 are allowed.
