@@ -7,6 +7,87 @@ owner: Partners
 
 MariaDB v10.1.38
 
+## <a id="2-1-3"></a> v2.1.3
+
+**Release Date:** August 28, 2019
+
+***Added***
+
+- a9s MongoDB: Documentation on how to migrate MongoDB data between service instances,
+- all services: a9s Dashboard API: min length of encryption key is configurable
+- a9s Router: adds a9s Router service as a needed dependency for K8S deployments in future
+- a9s Dashboard API: Add endpoint to prepare a disaster recovery for a given
+  service instance.
+- all services: a9s Deployer: Use deployment name to create and find a deployment.
+- all services: Add flexible service plans. For more information see the
+  [Service Plans](docs/platform-operator/service_plans.md) documentation.
+- all services: a9s Backup Service: The metadata file is now encrypted and
+  contains additional information about the service instance and the used
+  filter_plugins in the a9s Backup Agent.
+- a9s Backup Service: Add support for a9s Harbor backups.
+- a9s Backup Service: The backup create request now returns also the id of the backup.
+- **Experimental**: a9s Backup Service: Add support for OpenStack Swift as
+  backup store
+
+***Fixed***
+
+- a9s MySQL: SPI: Fix typo on exception variable when create a MySQL client
+  while binding a new app or creating a new key.
+- all services: a9s Service Dashboard API: Creation date of a backup in the
+  restore view gets shown properly.
+- all services: a9s Dashboard API: error message for encryption keys that are too short shows up again
+- all services: a9s Dashboard API: Updates `lodash` to version `4.17.14` to
+  resolve CVE.
+- all services: a9s Dashboard App: Updates `lodash` to version `4.17.14` to
+  resolve CVE.
+- all services: a9s Service Dashboard: Updates `node` version to `10.16`.
+- all services: a9s Backup Agent: Fix multipart upload.
+- a9s SSO Proxy: Added OAuth usage for POST, PATCH, PUT and DELETE methods.
+- a9s Backup Manager: Fix the deletion of metadata files when backups are
+  deleted.
+  To delete obsolete metadata files from already deleted backups have a
+  look at the [administration.md](docs/platform-operator/administration.md#delete-obsolete-backup-metadata-files).
+- all services: a9s Deployer: The a9s Deployer now properly catches and saves
+  the return values from the BOSH Director in case the BOSH Task fails.
+  Fetching instance information now properly returns the instance data with a
+  `failed` status instead of `422`.
+- a9s Backup Service: Fix migration of encryption key into a new column for
+  shorter encryption keys than the current limit.
+- a9s Backup Service: generate a9s Harbor Service Broker password.
+- a9s MySQL: Backup & Restore: terminate MySQL connections before restore.
+- a9s Backup Manager: Fix an issue where under special circumstances the backup
+  encryption key is not stored in the database.
+- a9s Backup Manager: Move database migration into a pre-start script to
+  mitigate timeout issue with the start script.
+- a9s Dashboard API: Replaced logger to redact sensitive data in logs.
+- a9s SSO-Proxy: The SSO-Proxy application returns now the HTTP Code
+  `401 unauthorized` if the CF Auth Token is expired or invalid.
+- all services: a9s Dashboard API: solve open CVE by updating the corresponding
+  libraries `eslint`, `shelljs`, `diff`, `express-basic-auth`, `lodash` and
+  `growl`.
+
+***Updated***
+
+- Stemcell: Update to BOSH stemcell version 315.x.
+- all services: a9s Service Broker: Using deployment name instead of deployment
+  id for the communication with the a9s BOSH Deployer.
+- all services: a9s BOSH Deployer: Use deployment names instead of deployment
+  ids in the outdated endpoint.
+- a9s Backup Manager: improve the documentation over the decryption of the backups
+- all services: a9s Service Dashboard: Replace AngularJS with React. In this
+  context we improved the UI of the a9s Service Dashboard. Please refer to the
+  [a9s Service Dashboard documentation](docs/application-developer/common/service_dashboard.md)
+  for more details.
+- all services: a9s Service Dashboard: Improved the datetime picker for PITR.
+- all services: a9s Service Dashboard: Per default deleted backups are not
+  displayed in the a9s Service Dashboard anymore.
+- all services: a9s Backup-Agent: Improve backup mechanism for backups bigger
+  than 1 GB and improve restore.
+- all services: a9s Service Broker: The a9a Service Broker requests
+  `available_updates` from the a9s Deployer only when the information is needed.
+- a9s Backup Service: Now the Backup Service can handle precise start and end time for
+  continuous archiving.
+
 ## <a id="2-1-2"></a> v2.1.2
 
 **Release Date:** June 28, 2019
